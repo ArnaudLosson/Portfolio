@@ -7,7 +7,7 @@ const Home = {
             <img src="./assets/img/avatar.jpeg" width="150px" alt="user avatar">
             <h1>Arnaud Losson</h1>
             <h3>Junior Web Dev</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <br>
             <div class="skills_projects_link">
                 <router-link to="/projects"> Projects / Skills </router-link>
                 <br>
@@ -41,7 +41,6 @@ const Projects = {
                 <div class="bio__media__text">
                     <h1>Arnaud Losson</h1>
                     <h3>Junior Web Dev</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 </div>
             </div> 
             <nav>

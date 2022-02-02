@@ -1,3 +1,4 @@
+/* Utility Classes */
 .d_none {
     display: none;
 }
@@ -107,7 +108,7 @@ a:hover {
     text-transform: uppercase;
     font-size: 1.5rem;
 }
-/* END Componenet */
+/* END Component */
 * {
     margin: 0;
     padding: 0;
