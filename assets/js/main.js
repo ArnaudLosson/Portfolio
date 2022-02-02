@@ -1,5 +1,6 @@
 // Homepage Component
-const Home = {template: `
+const Home = {
+    template: `
 
     <main id='home'>
         <div class="about__me">
@@ -8,11 +9,28 @@ const Home = {template: `
             <h3>Junior Web Dev</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
             <div class="skills_projects_link">
-                <router-link to="/projects"> Projects | Skills </router-link>
+                <router-link to="/projects"> Projects / Skills </router-link>
+                <br>
+                <br>
+                <h3>Contact:</h3>
+                <a :href="linkedInLink" target="_blank">LinkedIn
+                    <i class="fab fa-linkedin fa-lg fa-fw"></i>
+                </a> 
+                ||
+                <a :href="gitHubLink" target="_blank">GitHub
+                    <i class="fab fa-github fa-lg fa-fw"></i>
+                </a>
             </div>
         </div>
     </main>
-`}
+    `,
+    data() {
+        return {
+            gitHubLink: 'https://github.com/ArnaudLosson',
+            linkedInLink: 'https://www.linkedin.com/in/arnaud-losson/'
+        }
+    }
+}
 const Projects = {
     template: `
     <div>
