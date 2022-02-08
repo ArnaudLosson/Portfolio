@@ -12,7 +12,8 @@ const Home = {
                 <router-link to="/projects"> Projects / Skills </router-link>
                 <br>
                 <br>
-                <h3>Contact:</h3>
+                <router-link to="/contact">Contact:</router-link>
+                <br>
                 <a :href="linkedInLink" target="_blank">LinkedIn
                     <i class="fab fa-linkedin fa-lg fa-fw"></i>
                 </a> 
@@ -41,11 +42,19 @@ const Projects = {
                 <div class="bio__media__text">
                     <h1>Arnaud Losson</h1>
                     <h3>Junior Web Dev</h3>
+                    <a :href="linkedInLink" target="_blank">LinkedIn
+                    <i class="fab fa-linkedin fa-lg fa-fw"></i>
+                </a> 
+                ||
+                <a :href="gitHubLink" target="_blank">GitHub
+                    <i class="fab fa-github fa-lg fa-fw"></i>
+                </a>
                 </div>
             </div> 
             <nav>
                 <router-link to="/" class="p_2">Home</router-link>
                 <router-link to="/projects" class="p_2">Projects</router-link>
+                <router-link to="/contact" class="p_2">Contact</router-link>
                 <a :href="gitHubLink" target="_blank">
                     <i class="fab fa-github fa-lg fa-fw"></i>
                 </a>
@@ -131,7 +140,8 @@ const Projects = {
             page: 1,
             loading : true,
             errors: false,
-            gitHubLink: 'https://github.com/ArnaudLosson'
+            gitHubLink: 'https://github.com/ArnaudLosson',
+            linkedInLink: 'https://www.linkedin.com/in/arnaud-losson/'
             }
     },
     methods:{
@@ -188,12 +198,96 @@ const Projects = {
       setTimeout(this.fetchData, 2000);
     }
 }
+const Contact = {
+    
+    template: `
+        <div>
 
+            <header id="site_header" class="container d_flex">
+            <div class="bio__media">
+                <img src="./assets/img/avatar.jpeg" alt="user avatar">
+                <div class="bio__media__text">
+                    <h1>Arnaud Losson</h1>
+                    <h3>Junior Web Dev</h3>
+                    <a :href="linkedInLink" target="_blank">LinkedIn
+                    <i class="fab fa-linkedin fa-lg fa-fw"></i>
+                </a> 
+                ||
+                <a :href="gitHubLink" target="_blank">GitHub
+                    <i class="fab fa-github fa-lg fa-fw"></i>
+                </a>
+                </div>
+            </div> 
+            <nav>
+                <router-link to="/" class="p_2">Home</router-link>
+                <router-link to="/projects" class="p_2">Projects</router-link>
+                <router-link to="/contact" class="p_2">Contact</router-link>
+                <a :href="gitHubLink" target="_blank">
+                    <i class="fab fa-github fa-lg fa-fw"></i>
+                </a>
+            </nav>
+            </header>
+            <main class="container">
+                <form @submit.prevent="sendEmail">
+                    <label>Name</label>
+                    <input
+                    type="text"
+                    v-model="name"
+                    name="name"
+                    placeholder="Your Name"
+                    >
+                    <label>Email</label>
+                    <input
+                    type="email"
+                    v-model="email"
+                    name="email"
+                    placeholder="Your Email"
+                    >
+                    <label>Message</labeL>
+                    <textarea
+                    name="message"
+                    v-model="message"
+                    cols="60" rows="5"
+                    placeholder="Message">
+                    </textarea>
+
+                    <input type="submit" value="Send">
+                </form>
+            </main>
+        </div>
+    `,
+    data () {
+        return {
+            name:"",
+            email:"",
+            message:"",
+            gitHubLink: 'https://github.com/ArnaudLosson',
+            linkedInLink: 'https://www.linkedin.com/in/arnaud-losson/'
+        }
+    },
+    methods: {
+        sendEmail(e) {
+            try {
+                emailjs.sendForm('service_7t0pcdn', 'template_0bx8nho', e.target,'user_8uzRHWLCaiyIRZoOJrGtX', {
+                    name: this.name,
+                    email: this.email,
+                    message: this.message
+                })
+            } catch (error) {
+                console.log({error});
+            }
+            this.name = ''
+            this.email = ''
+            this.message = ''
+        },
+    }
+}
 // Define routes
 
 const routes = [
     {path: '/', component: Home},
     {path: '/projects', component: Projects},
+    {path: '/contact', component: Contact},
 ];
 
 
