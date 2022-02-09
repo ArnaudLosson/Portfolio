@@ -295,16 +295,19 @@ resize: vertical;
 }
 
 input[type=submit] {
-background-color: #3399FF;
+background-color: #DB5461;
 color: white;
 padding: 12px 20px;
 border: none;
 border-radius: 4px;
 cursor: pointer;
+display: flex;
+justify-content: center;
+float: none;
 }
 
 input[type=submit]:hover {
-background-color: #51a6fc;
+background-color: #dc2738;
 }
 
 
