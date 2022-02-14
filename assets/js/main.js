@@ -12,13 +12,18 @@ const Home = {
                 <router-link to="/projects"> Projects / Skills </router-link>
                 <br>
                 <br>
-                <h3>Contact:</h3>
+                <router-link to="/contact">Contact</router-link>
+                <br>
+                <br>
                 <a :href="linkedInLink" target="_blank">LinkedIn
                     <i class="fab fa-linkedin fa-lg fa-fw"></i>
                 </a> 
                 ||
                 <a :href="gitHubLink" target="_blank">GitHub
                     <i class="fab fa-github fa-lg fa-fw"></i>
+                </a>
+                <br>
+                <a href="mailto:arnaudlosson3@gmail.com">arnaudlosson3@gmail.com</a>
                 </a>
             </div>
         </div>
@@ -41,14 +46,19 @@ const Projects = {
                 <div class="bio__media__text">
                     <h1>Arnaud Losson</h1>
                     <h3>Junior Web Dev</h3>
+                    <a :href="linkedInLink" target="_blank">LinkedIn
+                    <i class="fab fa-linkedin fa-lg fa-fw"></i>
+                </a> 
+                ||
+                <a :href="gitHubLink" target="_blank">GitHub
+                    <i class="fab fa-github fa-lg fa-fw"></i>
+                </a>
                 </div>
             </div> 
             <nav>
                 <router-link to="/" class="p_2">Home</router-link>
                 <router-link to="/projects" class="p_2">Projects</router-link>
-                <a :href="gitHubLink" target="_blank">
-                    <i class="fab fa-github fa-lg fa-fw"></i>
-                </a>
+                <router-link to="/contact" class="p_2">Contact</router-link>
             </nav>
         </header>
         
@@ -131,7 +141,8 @@ const Projects = {
             page: 1,
             loading : true,
             errors: false,
-            gitHubLink: 'https://github.com/ArnaudLosson'
+            gitHubLink: 'https://github.com/ArnaudLosson',
+            linkedInLink: 'https://www.linkedin.com/in/arnaud-losson/'
             }
     },
     methods:{
@@ -188,12 +199,207 @@ const Projects = {
       setTimeout(this.fetchData, 2000);
     }
 }
+const Contact = {
+    
+    template: `
+        <div>
 
+            <header id="site_header" class="container d_flex">
+            <div class="bio__media">
+                <img src="./assets/img/avatar.jpeg" alt="user avatar">
+                <div class="bio__media__text">
+                    <h1>Arnaud Losson</h1>
+                    <h3>Junior Web Dev</h3>
+                    <a :href="linkedInLink" target="_blank">LinkedIn
+                    <i class="fab fa-linkedin fa-lg fa-fw"></i>
+                </a> 
+                ||
+                <a :href="gitHubLink" target="_blank">GitHub
+                    <i class="fab fa-github fa-lg fa-fw"></i>
+                </a>
+                </div>
+            </div> 
+            <nav>
+                <router-link to="/" class="p_2">Home</router-link>
+                <router-link to="/projects" class="p_2">Projects</router-link>
+                <router-link to="/contact" class="p_2">Contact</router-link>
+            </nav>
+            </header>
+            <main class="container">
+                <form @submit.prevent="sendEmail">
+                    <label>Name</label>
+                    <input
+                    type="text"
+                    v-model="name"
+                    name="name"
+                    placeholder="Your Name"
+                    required
+                    >
+                    <label>Email</label>
+                    <input
+                    type="email"
+                    v-model="email"
+                    name="email"
+                    placeholder="Your Email"
+                    required
+                    >
+                    <label>Message</labeL>
+                    <textarea
+                    name="message"
+                    v-model="message"
+                    cols="60" rows="5"
+                    placeholder="Message"
+                    required>
+                    </textarea>
+
+                    <input type="submit" value="Send">
+                </form>
+            </main>
+        </div>
+    `,
+    data () {
+        return {
+            name:"",
+            email:"",
+            message:"",
+            gitHubLink: 'https://github.com/ArnaudLosson',
+            linkedInLink: 'https://www.linkedin.com/in/arnaud-losson/'
+        }
+    },
+    methods: {
+        sendEmail(e) {
+            try {
+                emailjs.sendForm('service_7t0pcdn', 'template_0bx8nho', e.target,'user_8uzRHWLCaiyIRZoOJrGtX', {
+                    name: this.name,
+                    email: this.email,
+                    message: this.message
+                })
+            } catch (error) {
+                console.log({error});
+            }
+            this.name = ''
+            this.email = ''
+            this.message = ''
+        },
+        test(options) {
+            let args = options.args || [];
+            args.unshift(null);
+            if (options.error) {
+                options.error.forEach((error) => {
+                args[0] = error;
+                try {
+                    assert.throws(() => validator[options.validator](...args));
+                } catch (err) {
+                    let warning = format(
+                    'validator.%s(%s) passed but should error',
+                    options.validator, args.join(', ')
+                    );
+                    throw new Error(warning);
+                }
+                });
+            }
+            if (options.valid) {
+                options.valid.forEach((valid) => {
+                    args[0] = valid;
+                    if (validator[options.validator](...args) !== true) {
+                        let warning = format(
+                            'validator.%s(%s) failed but should have passed',
+                            options.validator, args.join(', ')
+                        );
+                        throw new Error(warning);
+                    }
+                });
+            }
+            if (options.invalid) {
+                options.invalid.forEach((invalid) => {
+                    args[0] = invalid;
+                    if (validator[options.validator](...args) !== false) {
+                        let warnings = format(
+                            'validator.%s(%s) passed but should have failed',
+                            options.validator, args.join(', ')
+                        );
+                        throw new Error(warning);
+                    }
+                });
+            }
+        },
+        repeat(str, count) {
+            let result ='';
+            for (; count; count--) {
+                result += str;
+            }
+            return result;
+        },
+        // describe('Validators', ) => {
+        //     it('should validate email addresses', () => {
+        //       test({
+        //         validator: 'isEmail',
+        //         valid: [
+        //           'foo@bar.com',
+        //           'x@x.au',
+        //           'foo@bar.com.au',
+        //           'foo+bar@bar.com',
+        //           'hans.m端ller@test.com',
+        //           'hans@m端ller.com',
+        //           'test|123@m端ller.com',
+        //           'test123+ext@gmail.com',
+        //           'some.name.midd.leNa.me.and.locality+extension@GoogleMail.com',
+        //           '"foobar"@example.com',
+        //           '"  foo  m端ller "@example.com',
+        //           '"foo\\@bar"@example.com',
+        //           `${repeat('a', 64)}@${repeat('a', 63)}.com`,
+        //           `${repeat('a', 64)}@${repeat('a', 63)}.com`,
+        //           `${repeat('a', 31)}@gmail.com`,
+        //           'test@gmail.com',
+        //           'test.1@gmail.com',
+        //           'test@1337.com',
+        //         ],
+        //         invalid: [
+        //           'invalidemail@',
+        //           'invalid.com',
+        //           '@invalid.com',
+        //           'foo@bar.com.',
+        //           'somename@ｇｍａｉｌ.com',
+        //           'foo@bar.co.uk.',
+        //           'z@co.c',
+        //           'ｇｍａｉｌｇｍａｉｌｇｍａｉｌｇｍａｉｌｇｍａｉｌ@gmail.com',
+        //           `${repeat('a', 64)}@${repeat('a', 251)}.com`,
+        //           `${repeat('a', 65)}@${repeat('a', 250)}.com`,
+        //           `${repeat('a', 64)}@${repeat('a', 64)}.com`,
+        //           `${repeat('a', 64)}@${repeat('a', 63)}.${repeat('a', 63)}.${repeat('a', 63)}.${repeat('a', 58)}.com`,
+        //           'test1@invalid.co m',
+        //           'test2@invalid.co m',
+        //           'test3@invalid.co m',
+        //           'test4@invalid.co m',
+        //           'test5@invalid.co m',
+        //           'test6@invalid.co m',
+        //           'test7@invalid.co m',
+        //           'test8@invalid.co m',
+        //           'test9@invalid.co m',
+        //           'test10@invalid.co m',
+        //           'test11@invalid.co m',
+        //           'test12@invalid.co　m',
+        //           'test13@invalid.co　m',
+        //           'multiple..dots@stillinvalid.com',
+        //           'test123+invalid! sub_address@gmail.com',
+        //           'gmail...ignores...dots...@gmail.com',
+        //           'ends.with.dot.@gmail.com',
+        //           'multiple..dots@gmail.com',
+        //           'wrong()[]",:;<>@@gmail.com',
+        //           '"wrong()[]",:;<>@@gmail.com',
+        //           'username@domain.com�',
+        //           'username@domain.com©',
+        //         ],
+        //       });
+        //     });
+    }
+}
 // Define routes
 
 const routes = [
     {path: '/', component: Home},
     {path: '/projects', component: Projects},
+    {path: '/contact', component: Contact},
 ];
 
 
